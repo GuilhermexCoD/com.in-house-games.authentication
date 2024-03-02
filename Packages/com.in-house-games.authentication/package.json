@@ -1,0 +1,12 @@
+{
+  "name": "com.in-house-games.authentication",
+  "displayName": "Authentication for Unity In House Games",
+  "version": "1.0.0",
+  "unity": "2022.3",
+  "author": "CDM Vision",
+  "description": "Simple OAuth2 client for Unity.",
+  "hideInEditor": false,
+  "dependencies": {
+    "com.unity.nuget.newtonsoft-json": "2.0.2"
+  }
+}
