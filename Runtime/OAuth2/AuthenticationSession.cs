@@ -7,14 +7,21 @@ using UnityEngine;
 
 namespace Cdm.Authentication.OAuth2
 {
-    public class AuthenticationSession : IDisposable
+    public class AuthenticationSession : AuthenticationSession<AccessTokenResponse>
     {
-        private readonly AuthorizationCodeFlow _client;
+        public AuthenticationSession(AuthorizationCodeFlow<AccessTokenResponse> client, IBrowser browser) : base(client, browser)
+        {
+        }
+    }
+
+    public class AuthenticationSession<TAccessTokenResponse> : IDisposable where TAccessTokenResponse : AccessTokenResponse
+    {
+        private readonly AuthorizationCodeFlow<TAccessTokenResponse> _client;
         private readonly IBrowser _browser;
 
         public TimeSpan loginTimeout { get; set; } = TimeSpan.FromMinutes(10);
 
-        public AuthenticationSession(AuthorizationCodeFlow client, IBrowser browser)
+        public AuthenticationSession(AuthorizationCodeFlow<TAccessTokenResponse> client, IBrowser browser)
         {
             _client = client;
             _browser = browser;
@@ -43,7 +50,7 @@ namespace Cdm.Authentication.OAuth2
         /// <exception cref="AuthorizationCodeRequestException"></exception>
         /// <exception cref="AccessTokenRequestException"></exception>
         /// <exception cref="AuthenticationException"></exception>
-        public async Task<AccessTokenResponse> AuthenticateAsync(CancellationToken cancellationToken = default)
+        public async Task<TAccessTokenResponse> AuthenticateAsync(CancellationToken cancellationToken = default)
         {
             using var timeoutCancellationTokenSource = new CancellationTokenSource(loginTimeout);
 
@@ -92,7 +99,7 @@ namespace Cdm.Authentication.OAuth2
         }
 
         /// <inheritdoc cref="AuthorizationCodeFlow.GetOrRefreshTokenAsync"/>
-        public async Task<AccessTokenResponse> GetOrRefreshTokenAsync(CancellationToken cancellationToken = default)
+        public async Task<TAccessTokenResponse> GetOrRefreshTokenAsync(CancellationToken cancellationToken = default)
         {
             return await _client.GetOrRefreshTokenAsync(cancellationToken);
         }

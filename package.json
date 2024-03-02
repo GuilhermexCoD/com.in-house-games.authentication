@@ -1,9 +1,9 @@
 {
-  "name": "com.cdm.authentication",
-  "displayName": "Authentication for Unity",
-  "version": "1.2.0",
+  "name": "com.in-house-games.authentication",
+  "displayName": "Authentication for Unity In House Games",
+  "version": "1.0.0",
   "unity": "2021.3",
-  "author": "CDM Vision",
+  "author": "In House Games and CDM Vision",
   "description": "Simple OAuth2 client for Unity.",
   "hideInEditor": false,
   "dependencies": {
