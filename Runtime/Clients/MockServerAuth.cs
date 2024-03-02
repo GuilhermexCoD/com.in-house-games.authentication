@@ -2,14 +2,7 @@
 
 namespace Cdm.Authentication.Clients
 {
-    public class MockServerAuth : MockServerAuth<AccessTokenResponse>
-    {
-        public MockServerAuth(Configuration configuration, string serverUrl) : base(configuration, serverUrl)
-        {
-        }
-    }
-
-    public class MockServerAuth<TAccessTokenResponse> : AuthorizationCodeFlow<TAccessTokenResponse> where TAccessTokenResponse : AccessTokenResponse
+    public class MockServerAuth : AuthorizationCodeFlow
     {
         public const string AuthorizationPath = "/oauth/authorize";
         public const string TokenPath = "/oauth/token";

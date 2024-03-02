@@ -14,13 +14,6 @@ using UnityEngine;
 
 namespace Cdm.Authentication.OAuth2
 {
-    public abstract class AuthorizationCodeFlow : AuthorizationCodeFlow<AccessTokenResponse>
-    {
-        protected AuthorizationCodeFlow(Configuration configuration) : base(configuration)
-        {
-        }
-    }
-
     /// <summary>
     /// Supports 'Authorization Code' flow. Enables user sign-in and access to web APIs on behalf of the user.
     ///
@@ -29,7 +22,7 @@ namespace Cdm.Authentication.OAuth2
     /// redirection from the authorization server back to your application. For example, a web browser, desktop,
     /// or mobile application operated by a user to sign in to your app and access their data.
     /// </summary>
-    public abstract class AuthorizationCodeFlow<TAccessTokenResponse> : IDisposable where TAccessTokenResponse : AccessTokenResponse
+    public abstract class AuthorizationCodeFlow : IDisposable
     {
         /// <summary>
         /// The endpoint for authorization server. This is used to get the authorization code.
@@ -52,7 +45,7 @@ namespace Cdm.Authentication.OAuth2
         /// </summary>
         public Configuration configuration { get; }
 
-        protected TAccessTokenResponse accessTokenResponse { get; private set; }
+        protected AccessTokenResponse accessTokenResponse { get; private set; }
         protected HttpClient httpClient { get; }
 
         protected AuthorizationCodeFlow(Configuration configuration)
@@ -128,7 +121,7 @@ namespace Cdm.Authentication.OAuth2
         /// <exception cref="Exception"></exception>
         /// <exception cref="SecurityException"></exception>
         /// <exception cref="AccessTokenRequestException"></exception>
-        public virtual async Task<TAccessTokenResponse> ExchangeCodeForAccessTokenAsync(string redirectUrl,
+        public virtual async Task<AccessTokenResponse> ExchangeCodeForAccessTokenAsync(string redirectUrl,
             CancellationToken cancellationToken = default)
         {
             var authorizationResponseUri = new Uri(redirectUrl);
@@ -172,7 +165,7 @@ namespace Cdm.Authentication.OAuth2
         /// </summary>
         /// <param name="cancellationToken">Cancellation token to cancel operation.</param>
         /// <exception cref="AccessTokenRequestException">If access token cannot be granted.</exception>
-        public async Task<TAccessTokenResponse> GetOrRefreshTokenAsync(
+        public async Task<AccessTokenResponse> GetOrRefreshTokenAsync(
             CancellationToken cancellationToken = default)
         {
             if (ShouldRefreshToken())
@@ -189,7 +182,7 @@ namespace Cdm.Authentication.OAuth2
         /// </summary>
         /// <param name="cancellationToken">Cancellation token to cancel operation.</param>
         /// <returns>Token response which contains the access token and the refresh token.</returns>
-        public async Task<TAccessTokenResponse> RefreshTokenAsync(CancellationToken cancellationToken = default)
+        public async Task<AccessTokenResponse> RefreshTokenAsync(CancellationToken cancellationToken = default)
         {
             if (accessTokenResponse == null)
                 throw new AccessTokenRequestException(new AccessTokenRequestError()
@@ -207,7 +200,7 @@ namespace Cdm.Authentication.OAuth2
         /// <param name="refreshToken">Refresh token which is used to get a new access token.</param>
         /// <param name="cancellationToken">Cancellation token to cancel operation.</param>
         /// <returns>Token response which contains the access token and the input refresh token.</returns>
-        public async Task<TAccessTokenResponse> RefreshTokenAsync(string refreshToken,
+        public async Task<AccessTokenResponse> RefreshTokenAsync(string refreshToken,
             CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(refreshToken))
@@ -240,7 +233,7 @@ namespace Cdm.Authentication.OAuth2
             return accessTokenResponse;
         }
 
-        private async Task<TAccessTokenResponse> GetAccessTokenInternalAsync(FormUrlEncodedContent content,
+        private async Task<AccessTokenResponse> GetAccessTokenInternalAsync(FormUrlEncodedContent content,
             CancellationToken cancellationToken = default)
         {
             Debug.Assert(content != null);
@@ -267,7 +260,7 @@ namespace Cdm.Authentication.OAuth2
                 Debug.Log(responseJson);
 #endif
 
-                var tokenResponse = JsonConvert.DeserializeObject<TAccessTokenResponse>(responseJson);
+                var tokenResponse = JsonConvert.DeserializeObject<AccessTokenResponse>(responseJson);
                 tokenResponse.issuedAt = DateTime.UtcNow;
                 return tokenResponse;
             }
