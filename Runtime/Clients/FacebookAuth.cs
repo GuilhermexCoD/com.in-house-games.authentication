@@ -6,7 +6,14 @@ using Cdm.Authentication.Utils;
 
 namespace Cdm.Authentication.Clients
 {
-    public class FacebookAuth : AuthorizationCodeFlow, IUserInfoProvider
+    public class FacebookAuth : FacebookAuth<AccessTokenResponse>
+    {
+        public FacebookAuth(Configuration configuration) : base(configuration)
+        {
+        }
+    }
+
+    public class FacebookAuth<TAccessTokenResponse> : AuthorizationCodeFlow<TAccessTokenResponse>, IUserInfoProvider where TAccessTokenResponse : AccessTokenResponse
     {
         public override string authorizationUrl => "https://www.facebook.com/dialog/oauth";
         public override string accessTokenUrl => "https://graph.facebook.com/oauth/access_token";
