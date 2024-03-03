@@ -6,7 +6,14 @@ using Cdm.Authentication.Utils;
 
 namespace Cdm.Authentication.Clients
 {
-    public class GoogleAuth : AuthorizationCodeFlow, IUserInfoProvider
+    public class GoogleAuth : GoogleAuth<AccessTokenResponse>
+    {
+        public GoogleAuth(Configuration configuration) : base(configuration)
+        {
+        }
+    }
+
+    public class GoogleAuth<TAccessTokenResponse> : AuthorizationCodeFlow<TAccessTokenResponse>, IUserInfoProvider where TAccessTokenResponse : AccessTokenResponse
     {
         public GoogleAuth(Configuration configuration) : base(configuration)
         {

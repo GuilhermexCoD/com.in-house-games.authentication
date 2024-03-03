@@ -6,7 +6,14 @@ using Cdm.Authentication.Utils;
 
 namespace Cdm.Authentication.Clients
 {
-    public class GitHubAuth : AuthorizationCodeFlow, IUserInfoProvider
+    public class GitHubAuth : GitHubAuth<AccessTokenResponse>
+    {
+        public GitHubAuth(Configuration configuration) : base(configuration)
+        {
+        }
+    }
+
+    public class GitHubAuth<TAccessTokenResponse> : AuthorizationCodeFlow<TAccessTokenResponse>, IUserInfoProvider where TAccessTokenResponse : AccessTokenResponse
     {
         public GitHubAuth(Configuration configuration) : base(configuration)
         {
