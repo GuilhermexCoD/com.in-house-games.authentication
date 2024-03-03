@@ -13,8 +13,8 @@
   - WKWebView (iOS) (https://developer.apple.com/documentation/webkit/wkwebview)
 
 ## Install via Unity Package Manager:
-* Add `"https://github.com/GuilhermexCoD/com.in-house-games.authentication.git#1.0.1"` to your project's package manifest file in dependencies section.
-* Or, `Package Manager > Add package from git URL...` and paste this URL: `https://github.com/GuilhermexCoD/com.in-house-games.authentication.git#1.0.1`
+* Add `"https://github.com/GuilhermexCoD/com.in-house-games.authentication.git#1.0.2"` to your project's package manifest file in dependencies section.
+* Or, `Package Manager > Add package from git URL...` and paste this URL: `https://github.com/GuilhermexCoD/com.in-house-games.authentication.git#1.0.2`
 
 ## Example usage
 
