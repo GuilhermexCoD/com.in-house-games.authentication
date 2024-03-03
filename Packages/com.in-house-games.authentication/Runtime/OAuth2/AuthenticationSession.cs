@@ -105,13 +105,13 @@ namespace Cdm.Authentication.OAuth2
         }
 
         /// <inheritdoc cref="AuthorizationCodeFlow.RefreshTokenAsync(System.Threading.CancellationToken)"/>
-        public async Task<AccessTokenResponse> RefreshTokenAsync(CancellationToken cancellationToken = default)
+        public async Task<TAccessTokenResponse> RefreshTokenAsync(CancellationToken cancellationToken = default)
         {
             return await _client.RefreshTokenAsync(cancellationToken);
         }
 
         /// <inheritdoc cref="AuthorizationCodeFlow.RefreshTokenAsync(string,System.Threading.CancellationToken)"/>
-        public async Task<AccessTokenResponse> RefreshTokenAsync(string refreshToken,
+        public async Task<TAccessTokenResponse> RefreshTokenAsync(string refreshToken,
             CancellationToken cancellationToken = default)
         {
             return await _client.RefreshTokenAsync(refreshToken, cancellationToken);
